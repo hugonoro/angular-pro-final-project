@@ -1,0 +1,14 @@
+{
+    "database": {
+        "rules": "database.rules.json"
+    },
+    "hosting": {
+        "public": "dist/angular-pro-final-project",
+        "rewrites": [
+            {
+                "source": "**",
+                "destination": "/index.html"
+            }
+        ]
+    }
+}
