@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { Store } from 'store';
 
+import { Store } from 'store';
+import { AuthModule } from '../auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './containers/app/app.component';
 
@@ -11,7 +12,8 @@ import { AppComponent } from './containers/app/app.component';
     ],
     imports: [
         BrowserModule,
-        AppRoutingModule
+        AppRoutingModule,
+        AuthModule
     ],
     providers: [
         Store

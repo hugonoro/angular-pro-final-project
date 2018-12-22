@@ -26,3 +26,10 @@ testem.log
 
 #System Files
 .DS_Store
+
+### Firebase ###
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
