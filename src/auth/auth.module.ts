@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AngularFireModule, FirebaseAppConfig } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireDatabaseModule } from '@angular/fire/database-deprecated';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 
 import { AuthRoutingModule } from './auth-routing.module';
