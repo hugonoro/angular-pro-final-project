@@ -1,13 +1,17 @@
+import { User } from 'firebase';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { distinctUntilChanged, pluck } from 'rxjs/operators';
 
 
 export interface State {
+    user: User;
     [key: string]: any;
 }
 
-const state: State = {};
+const state: State = {
+    user: undefined
+};
 
 export class Store {
 
