@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { Store } from 'store';
 import { AuthModule } from '../auth/auth.module';
+import { HealthModule } from '../health/health.module';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './components/header/header.component';
 import { NavComponent } from './components/nav/nav.component';
@@ -17,12 +18,15 @@ import { AppComponent } from './containers/app/app.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        AuthModule
+        AuthModule,
+        HealthModule
     ],
     providers: [
         Store
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [
+        AppComponent
+    ]
 })
 export class AppModule {
 }
