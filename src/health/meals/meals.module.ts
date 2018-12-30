@@ -5,10 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { MealsComponent } from './containers/meals/meals.component';
 import { MealsRoutingModule } from './meals-routing.module';
+import { MealComponent } from './containers/meal/meal.component';
 
 @NgModule({
     declarations: [
-        MealsComponent
+        MealsComponent,
+        MealComponent
     ],
     imports: [
         CommonModule,
