@@ -1,16 +1,22 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { MealsService } from './services/meals/meals.service';
 
+import { MealsService } from './services/meals/meals.service';
 import { SharedRoutingModule } from './shared-routing.module';
+import { ListItemComponent } from './components/list-item/list-item.component';
 
 @NgModule({
-    declarations: [],
+    declarations: [
+        ListItemComponent
+    ],
     imports: [
         CommonModule,
         SharedRoutingModule,
         AngularFireDatabaseModule
+    ],
+    exports: [
+        ListItemComponent
     ]
 })
 export class SharedModule {
