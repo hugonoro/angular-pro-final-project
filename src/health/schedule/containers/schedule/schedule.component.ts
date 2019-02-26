@@ -9,7 +9,7 @@ import { ScheduleService } from '../../../shared/services/schedule/schedule.serv
     styleUrls: ['schedule.component.scss'],
     template: `
       <div class="schedule">
-        <app-schedule-calendar [date]="date$ | async">
+        <app-schedule-calendar [date]="date$ | async" (change)="changeDate($event)">
         </app-schedule-calendar>
       </div>
     `
@@ -31,6 +31,10 @@ export class ScheduleComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$)
             )
             .subscribe();
+    }
+
+    changeDate(date: Date) {
+        this.scheduleService.updateDate(date);
     }
 
     ngOnDestroy(): void {
