@@ -50,6 +50,10 @@ export class MealsService {
         this.db.list(`meals/${ this.uid }`).push(meal);
     }
 
+    updateMeal(key: string, meal: Meal) {
+        this.db.object(`meals/${ this.uid }/${ key }`).update(meal);
+    }
+
     removeMeal(key: string) {
         this.db.list(`/meals/${ this.uid }`).remove(key);
     }
