@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { MealsService } from './services/meals/meals.service';
+import { WorkoutsService } from './services/workouts/workouts.service';
 import { SharedRoutingModule } from './shared-routing.module';
 import { ListItemComponent } from './components/list-item/list-item.component';
 
@@ -24,7 +25,8 @@ export class SharedModule {
         return {
             ngModule: SharedModule,
             providers: [
-                MealsService
+                MealsService,
+                WorkoutsService
             ]
         };
     }
