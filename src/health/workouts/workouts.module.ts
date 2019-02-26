@@ -7,12 +7,14 @@ import { WorkoutFormComponent } from './components/workout-form/workout-form.com
 import { WorkoutComponent } from './containers/workout/workout.component';
 import { WorkoutsComponent } from './containers/workouts/workouts.component';
 import { WorkoutsRoutingModule } from './workouts-routing.module';
+import { WorkoutTypeComponent } from './components/workout-type/workout-type.component';
 
 @NgModule({
     declarations: [
         WorkoutComponent,
         WorkoutsComponent,
-        WorkoutFormComponent
+        WorkoutFormComponent,
+        WorkoutTypeComponent
     ],
     imports: [
         CommonModule,
