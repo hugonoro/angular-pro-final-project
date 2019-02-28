@@ -7,13 +7,15 @@ import { ScheduleDaysComponent } from './components/schedule-days/schedule-days.
 import { ScheduleComponent } from './containers/schedule/schedule.component';
 
 import { ScheduleRoutingModule } from './schedule-routing.module';
+import { ScheduleSectionComponent } from './components/schedule-section/schedule-section.component';
 
 @NgModule({
     declarations: [
         ScheduleComponent,
         ScheduleCalendarComponent,
         ScheduleDaysComponent,
-        ScheduleControlsComponent
+        ScheduleControlsComponent,
+        ScheduleSectionComponent
     ],
     imports: [
         CommonModule,

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 
+import { ScheduleItem, ScheduleList } from '../../../shared/services/schedule/schedule.service';
+
 @Component({
     selector: 'app-schedule-calendar',
     styleUrls: ['./schedule-calendar.component.scss'],
@@ -13,6 +15,11 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
                 [selected]="selectedDayIndex"
                 (select)="selectDay($event)">
         </app-schedule-days>
+        <app-schedule-section
+                *ngFor="let section of sections"
+                [name]="section.name"
+                [section]="getSection(section.key)">
+        </app-schedule-section>
       </div>
     `
 })
@@ -23,12 +30,22 @@ export class ScheduleCalendarComponent implements OnInit, OnChanges {
         this.selectedDay = new Date(date.getTime());
     }
 
+    @Input()
+    items: ScheduleList;
+
     @Output()
     change = new EventEmitter<Date>();
 
     selectedDayIndex: number;
     selectedDay: Date;
     selectedWeek: Date;
+
+    sections = [
+        { key: 'morning', name: 'Morning' },
+        { key: 'lunch', name: 'Lunch' },
+        { key: 'evening', name: 'Evening' },
+        { key: 'snacks', name: 'Snacks and Drinks' }
+    ];
 
     constructor() {
     }
@@ -39,6 +56,10 @@ export class ScheduleCalendarComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+    }
+
+    getSection(name: string): ScheduleItem {
+        return this.items && this.items[name] || {};
     }
 
     selectDay(index: number) {
