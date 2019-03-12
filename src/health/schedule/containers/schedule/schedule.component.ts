@@ -12,7 +12,8 @@ import { ScheduleItem, ScheduleService } from '../../../shared/services/schedule
         <app-schedule-calendar
                 [date]="date$ | async"
                 [items]="schedule$ | async"
-                (change)="changeDate($event)">
+                (change)="changeDate($event)"
+                (select)="changeSelection($event)">
         </app-schedule-calendar>
       </div>
     `
@@ -36,10 +37,20 @@ export class ScheduleComponent implements OnInit, OnDestroy {
                 takeUntil(this.destroy$)
             )
             .subscribe();
+
+        this.scheduleService.selected$
+            .pipe(
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     changeDate(date: Date) {
         this.scheduleService.updateDate(date);
+    }
+
+    changeSection(event: any) {
+        this.scheduleService.selectSection(event);
     }
 
     ngOnDestroy(): void {
