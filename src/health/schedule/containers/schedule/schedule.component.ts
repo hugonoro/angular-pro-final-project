@@ -13,7 +13,7 @@ import { ScheduleItem, ScheduleService } from '../../../shared/services/schedule
                 [date]="date$ | async"
                 [items]="schedule$ | async"
                 (change)="changeDate($event)"
-                (select)="changeSelection($event)">
+                (select)="changeSection($event)">
         </app-schedule-calendar>
       </div>
     `
