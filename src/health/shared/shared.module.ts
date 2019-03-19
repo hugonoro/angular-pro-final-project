@@ -23,7 +23,8 @@ import { WorkoutPipe } from './pipes/workout.pipe';
     ],
     exports: [
         ListItemComponent,
-        JoinPipe
+        JoinPipe,
+        WorkoutPipe
     ]
 })
 export class SharedModule {

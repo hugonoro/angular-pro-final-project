@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { forkJoin, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from 'store';
+import { Meal, MealsService } from '../../../shared/services/meals/meals.service';
 import { ScheduleItem, ScheduleService } from '../../../shared/services/schedule/schedule.service';
+import { Workout, WorkoutsService } from '../../../shared/services/workouts/workouts.service';
 
 @Component({
     selector: 'app-schedule',
@@ -15,30 +17,43 @@ import { ScheduleItem, ScheduleService } from '../../../shared/services/schedule
                 (change)="changeDate($event)"
                 (select)="changeSection($event)">
         </app-schedule-calendar>
+        <app-schedule-assign
+                *ngIf="open"
+                [section]="selected$ | async"
+                [list]="list$ | async">
+        </app-schedule-assign>
       </div>
     `
 })
 export class ScheduleComponent implements OnInit, OnDestroy {
 
+    open = false;
+
     date$: Observable<Date>;
     schedule$: Observable<ScheduleItem[]>;
+    selected$: Observable<any>;
+    list$: Observable<Meal[] | Workout[]>;
     destroy$: Subject<boolean> = new Subject();
 
     constructor(private store: Store,
+                private mealsService: MealsService,
+                private workoutsService: WorkoutsService,
                 private scheduleService: ScheduleService) {
     }
 
     ngOnInit() {
         this.date$ = this.store.select('date');
         this.schedule$ = this.store.select('schedule');
+        this.selected$ = this.store.select('selected');
+        this.list$ = this.store.select('list');
 
-        this.scheduleService.schedule$
-            .pipe(
-                takeUntil(this.destroy$)
-            )
-            .subscribe();
-
-        this.scheduleService.selected$
+        forkJoin(
+            this.scheduleService.schedule$,
+            this.scheduleService.selected$,
+            this.scheduleService.list$,
+            this.mealsService.meals$,
+            this.workoutsService.workouts$
+        )
             .pipe(
                 takeUntil(this.destroy$)
             )
@@ -50,6 +65,7 @@ export class ScheduleComponent implements OnInit, OnDestroy {
     }
 
     changeSection(event: any) {
+        this.open = true;
         this.scheduleService.selectSection(event);
     }
 

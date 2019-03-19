@@ -8,7 +8,7 @@ import { ScheduleItem, ScheduleList } from '../../../shared/services/schedule/sc
     template: `
       <div class="calendar">
         <app-schedule-controls
-                \[selected]="selectedDay"
+                [selected]="selectedDay"
                 (move)="onChange($event)">
         </app-schedule-controls>
         <app-schedule-days

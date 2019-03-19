@@ -37,6 +37,12 @@ export class ScheduleService {
             tap(next => this.store.set('selected', next))
         );
 
+    list$ = this.section$
+        .pipe(
+            map((value: any) => this.store.value[value.type]),
+            tap(next => this.store.set('list', next))
+        );
+
     schedule$: Observable<any[]> = this.date$
         .pipe(
             tap((next: any) => this.store.set('date', next)),

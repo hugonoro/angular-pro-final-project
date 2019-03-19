@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Meal } from '../../../shared/services/meals/meals.service';
 
 import { ScheduleItem } from '../../../shared/services/schedule/schedule.service';
+import { Workout } from '../../../shared/services/workouts/workouts.service';
 
 @Component({
     selector: 'app-schedule-section',
@@ -14,8 +16,8 @@ import { ScheduleItem } from '../../../shared/services/schedule/schedule.service
         <div>
           <div class="schedule-section__item food"
                *ngIf="section.meals; else addMeal"
-               (click)="onSelect('meals',section.meals)">
-            <span> {{ section.meals }} </span>
+               (click)="onSelect('meals', section.meals)">
+            <span> {{ section.meals | join}} </span>
           </div>
           <ng-template #addMeal>
             <div class="schedule-section__item"
@@ -25,8 +27,8 @@ import { ScheduleItem } from '../../../shared/services/schedule/schedule.service
           </ng-template>
           <div class="schedule-section__item workout"
                *ngIf="section.workouts; else addWorkout"
-               (click)="onSelect('workouts',section.workouts)">
-            <span> {{ section.workouts }} </span>
+               (click)="onSelect('workouts', section.workouts)">
+            <span> {{ section.workouts | join }} </span>
           </div>
           <ng-template #addWorkout>
             <div class="schedule-section__item"
@@ -49,7 +51,7 @@ export class ScheduleSectionComponent {
     @Output()
     select = new EventEmitter<any>();
 
-    onSelect(type: string, assigned: string [] = []) {
+    onSelect(type: string, assigned: Meal [] | Workout [] = []) {
         const data = this.section;
         this.select.emit({
             type,
