@@ -21,7 +21,7 @@ export class WorkoutsService {
 
     workouts$: Observable<Workout[]> = this.db.list<Workout>(`workouts/${ this.uid }`).snapshotChanges()
         .pipe(
-            map(actions => actions.map(a => ( { key: a.key, ...a.payload.val() } ))),
+            map(workouts => workouts.map(workout => ( { key: workout.key, ...workout.payload.val() } ))),
             tap(next => this.store.set('workouts', next))
         );
 

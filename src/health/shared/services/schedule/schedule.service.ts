@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
 import { Store } from 'store';
 import { AuthService } from '../../../../auth/shared/services/auth/auth.service';
@@ -31,6 +31,33 @@ export class ScheduleService {
 
     private date$ = new BehaviorSubject(new Date());
     private section$ = new Subject();
+    private itemList$ = new Subject();
+
+    items$ = this.itemList$
+        .pipe(
+            withLatestFrom(this.section$),
+            map(([items, section]: any[]) => {
+                const id = section.data.key;
+                const defaults: ScheduleItem = {
+                    key: null,
+                    workouts: null,
+                    meals: null,
+                    section: section.section,
+                    timestamp: new Date(section.day).getTime()
+                };
+
+                const payload = {
+                    ...( id ? section.data : defaults ),
+                    ...items
+                };
+
+                if (id) {
+                    return this.updateSection(id, payload);
+                } else {
+                    return this.createSection(payload);
+                }
+            })
+        );
 
     selected$ = this.section$
         .pipe(
@@ -80,6 +107,10 @@ export class ScheduleService {
         return this.authService.user.uid;
     }
 
+    updateItems(items: string[]) {
+        this.itemList$.next(items);
+    }
+
     updateDate(date: Date) {
         this.date$.next(date);
     }
@@ -88,8 +119,19 @@ export class ScheduleService {
         this.section$.next(event);
     }
 
+    private createSection(payload: ScheduleItem) {
+        return this.db.list(`schedule/${ this.uid }`).push(payload);
+    }
+
+    private updateSection(key: string, payload: ScheduleItem) {
+        return this.db.object(`schedule/${ this.uid }/${ key }`).update(payload);
+    }
+
     private getSchedule(startAt: number, endAt: number) {
-        return this.db.list(`schedule/${ this.uid }`, ref => ref.orderByChild('timestamp').startAt(startAt).endAt(endAt)).valueChanges();
+        return this.db.list(`schedule/${ this.uid }`, ref => ref.orderByChild('timestamp').startAt(startAt).endAt(endAt)).snapshotChanges()
+            .pipe(
+                map(schedules => schedules.map(schedule => ( { key: schedule.key, ...schedule.payload.val() } )))
+            );
     }
 
 }
